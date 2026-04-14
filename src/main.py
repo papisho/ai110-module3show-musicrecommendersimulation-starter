@@ -16,7 +16,7 @@ def main() -> None:
     songs = load_songs("data/songs.csv") 
 
     # Starter example profile
-    user_prefs = {"genre": "pop", "mood": "happy", "energy": 0.8}
+    user_prefs = {"genre": "pop", "mood": "happy", "energy": 0.8, "likes_acoustic": False}
 
     recommendations = recommend_songs(user_prefs, songs, k=5)
 
@@ -25,8 +25,12 @@ def main() -> None:
         # You decide the structure of each returned item.
         # A common pattern is: (song, score, explanation)
         song, score, explanation = rec
-        print(f"{song['title']} - Score: {score:.2f}")
-        print(f"Because: {explanation}")
+        print(f"{song['title']} - {song['artist']}")
+        print(f"Score: {score:.2f}")
+        reasons = explanation.split(", ") if explanation else ["No explanation available"]
+        for reason in reasons:
+            print(f"  - {reason}")
+        print("---")
         print()
 
 

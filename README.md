@@ -17,18 +17,20 @@ Replace this paragraph with your own summary of what your version does.
 
 ## How The System Works
 
-Explain your design in plain language.
+In this project, the idea is much simpler: the system compares each song to a user’s taste profile and gives higher scores to songs that match better.
 
-Some prompts to answer:
+genre: matters because it helps the recommender match broad music taste, like pop, lofi, or rock.
 
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
+mood: matters because it captures the feeling of the song, such as happy, chill, or intense.
 
-You can include a simple diagram or bullet list if helpful.
+- the score is based on how closely a song matches the user’s preferred genre, mood, energy, and acoustic style, and songs with the best overall match get recommended first.
 
+This recommender is content-based, which means it compares each song’s attributes to a user’s taste profile. Each song gets points for matching important preferences, then all songs are sorted from highest score to lowest score. Songs near the top should feel like a better fit for the user’s vibe. The process is simple on purpose so it is easy to explain and improve.
+
+Potential Biases
+Genre can dominate the score, so songs outside the favorite genre may be ranked too low even if they match mood and energy well.
+The model ignores some important signals like tempo range, lyrics, and artist familiarity, so recommendations can feel too narrow.
+Some moods and genres have fewer songs in the dataset, which can make the system less fair for users with those preferences.
 ---
 
 ## Getting Started

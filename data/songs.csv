@@ -9,3 +9,11 @@ id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness
 8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22
 9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78
 10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35
+11,Velvet Skyline,Marina Vale,r&b,romantic,0.58,96,0.72,0.67,0.41
+12,Old Film Window,North Harbor,classical,nostalgic,0.22,68,0.38,0.18,0.94
+13,Red Dust Train,Juniper Road,country,nostalgic,0.47,104,0.61,0.73,0.56
+14,Iron Lantern,Black Tide,metal,aggressive,0.96,174,0.29,0.64,0.07
+15,River Market,Sol de Luna,reggae,relaxed,0.51,84,0.68,0.81,0.49
+16,After the Rainfall,Elara Grey,folk,melancholic,0.33,76,0.44,0.52,0.87
+17,Neon Ember,Static Bloom,electronic,aggressive,0.89,142,0.57,0.90,0.14
+18,Midnight Letters,June Atlas,soul,romantic,0.63,90,0.75,0.58,0.33
