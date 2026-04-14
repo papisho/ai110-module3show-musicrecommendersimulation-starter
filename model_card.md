@@ -2,60 +2,45 @@
 
 ## 1. Model Name  
 
-Give your model a short, descriptive name.  
-Example: **VibeFinder 1.0**  
+VibeMatch Lite 1.0
 
 ---
 
 ## 2. Intended Use  
 
-Describe what your recommender is designed to do and who it is for. 
-
-Prompts:  
-
-- What kind of recommendations does it generate  
-- What assumptions does it make about the user  
-- Is this for real users or classroom exploration  
+This recommender suggests the top 5 songs from a small class dataset.
+It uses one user profile with genre, mood, energy, and acoustic preference.
+It assumes the user has one main taste at a time.
+This project is for classroom exploration, not real production use.
 
 ---
 
 ## 3. How the Model Works  
 
-Explain your scoring approach in simple language.  
-
-Prompts:  
-
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
-
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
+Each song is compared to the user profile.
+The model gives points for genre match, mood match, energy closeness, and acoustic fit.
+Energy now has the biggest weight, so energy can strongly change the ranking.
+Genre still matters, but less than before.
+The model sorts songs by total score and returns the top songs.
 
 ---
 
 ## 4. Data  
 
-Describe the dataset the model uses.  
-
-Prompts:  
-
-- How many songs are in the catalog  
-- What genres or moods are represented  
-- Did you add or remove data  
-- Are there parts of musical taste missing in the dataset  
+The catalog has 18 songs.
+It includes genres like pop, lofi, rock, ambient, jazz, metal, and others.
+It includes moods like happy, chill, intense, relaxed, romantic, and more.
+I did not add or remove songs.
+The data is small, so many styles are missing or underrepresented.
 
 ---
 
 ## 5. Strengths  
 
-Where does your system seem to work well  
-
-Prompts:  
-
-- User types for which it gives reasonable results  
-- Any patterns you think your scoring captures correctly  
-- Cases where the recommendations matched your intuition  
+The system works well when the user profile matches common patterns in the dataset.
+It gives understandable reasons for each recommendation.
+High-Energy Pop and Chill Lofi produced results that mostly matched expectations.
+Changing profile settings clearly changes the top results.
 
 ---
 
@@ -63,14 +48,11 @@ Prompts:
 
 Where the system struggles or behaves unfairly. 
 
-One weakness from my experiments is catalog-driven filter bubble behavior. The dataset is imbalanced (for example, lofi is 3 of 18 songs while most genres appear only once), so users in common genres get more chances for high-ranked matches. Users with a missing favorite genre get no genre points at all and are pushed toward whichever songs happen to share energy or mood, which can feel off-target. This effect was clear in a cold-start test with favorite genre set to k-pop, where the top results were pop, indie pop, synthwave, and rock tracks because energy and mood dominated when genre match was unavailable.
-
-Prompts:  
-
-- Features it does not consider  
-- Genres or moods that are underrepresented  
-- Cases where the system overfits to one preference  
-- Ways the scoring might unintentionally favor some users  
+The dataset is imbalanced, so some users get better matches than others.
+For example, lofi appears 3 times, but many genres appear only once.
+If a user picks a missing genre like k-pop, genre match is impossible.
+Then the model falls back to energy and mood, which can feel inaccurate.
+The model can also over-focus on energy because energy has the strongest weight.
 
 ---
 
@@ -78,38 +60,28 @@ Prompts:
 
 How you checked whether the recommender behaved as expected. 
 
-I tested the recommender with three profiles: High-Energy Pop, Chill Lofi, and Deep Intense Rock, and compared the top 5 results for each profile. I looked for whether songs changed in ways a listener would expect when I changed genre, mood, energy, and acoustic preference. One surprise was that Gym Hero kept showing up even when genre did not match, because its very high energy score can outweigh missing genre points after the weight experiment. I also ran a logic experiment where I doubled energy weight and halved genre weight, and the ranking became more sensitive to energy than to genre labels. This helped confirm that the model is responsive, but it can over-prioritize “how energetic” a song is over “what type of song” a user asked for.
-
-Prompts:  
-
-- Which user profiles you tested  
-- What you looked for in the recommendations  
-- What surprised you  
-- Any simple tests or comparisons you ran  
-
-No need for numeric metrics unless you created some.
+I tested three profiles: High-Energy Pop, Chill Lofi, and Deep Intense Rock.
+I compared the top 5 songs for each profile.
+I checked whether the results changed in ways that made sense.
+I also ran a logic experiment by increasing energy weight and reducing genre weight.
+A surprise was that Gym Hero still ranked high for different profiles because energy strongly affects score.
 
 ---
 
 ## 8. Future Work  
 
-Ideas for how you would improve the model next.  
-
-Prompts:  
-
-- Additional features or preferences  
-- Better ways to explain recommendations  
-- Improving diversity among the top results  
-- Handling more complex user tastes  
+I would add more songs so each genre and mood has better coverage.
+I would add partial matches for similar genres and related moods.
+I would add diversity rules so the top 5 are less repetitive.
+I would support multi-style users instead of one fixed profile.
+I would improve explanations so users can see trade-offs more clearly.
 
 ---
 
 ## 9. Personal Reflection  
 
-A few sentences about your experience.  
-
-Prompts:  
-
-- What you learned about recommender systems  
-- Something unexpected or interesting you discovered  
-- How this changed the way you think about music recommendation apps  
+My biggest learning moment was seeing how one weight change shifted many results.
+When I doubled energy and reduced genre weight, the ranking changed fast, and songs like Gym Hero showed up for very different users.
+AI tools helped me move faster by suggesting tests, edge cases, and cleaner wording, but I still had to double-check outputs against the CSV and real score math.
+I learned that even a simple point system can feel personal because it reacts to user inputs and explains why songs were chosen.
+If I extend this project, I want to add more songs, partial genre/mood matching, and a diversity rule so the top 5 recommendations are less repetitive.
