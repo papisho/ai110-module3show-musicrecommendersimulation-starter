@@ -2,6 +2,16 @@ from typing import List, Dict, Tuple, Optional
 import csv
 from dataclasses import dataclass
 
+
+def _normalize_label(value: Optional[str]) -> str:
+    """Normalize string labels to reduce brittle exact-match failures."""
+    return str(value or "").strip().lower()
+
+
+def _clamp_01(value: float) -> float:
+    """Clamp numeric values to [0, 1] for stable scoring."""
+    return max(0.0, min(1.0, value))
+
 @dataclass
 class Song:
     """
@@ -118,20 +128,32 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     total_score = 0.0
     reasons: List[str] = []
 
-    if song["genre"] == user_prefs["genre"]:
-        total_score += 2.0
-        reasons.append("genre match (+2.0)")
+    user_genre = _normalize_label(user_prefs.get("genre"))
+    song_genre = _normalize_label(song.get("genre"))
+    user_mood = _normalize_label(user_prefs.get("mood"))
+    song_mood = _normalize_label(song.get("mood"))
 
-    if song["mood"] == user_prefs["mood"]:
+    if song_genre == user_genre and user_genre:
+        total_score += 1.0
+        reasons.append("genre match (+1.0)")
+
+    if song_mood == user_mood and user_mood:
         total_score += 1.0
         reasons.append("mood match (+1.0)")
 
-    energy_score = round(1 - abs(song["energy"] - user_prefs["energy"]), 2)
+    song_energy = _clamp_01(float(song.get("energy", 0.0)))
+    target_energy = _clamp_01(float(user_prefs.get("energy", 0.0)))
+    energy_score = round(2 * _clamp_01(1 - abs(song_energy - target_energy)), 2)
     total_score += energy_score
     reasons.append(f"energy proximity (+{energy_score})")
 
-    if user_prefs.get("likes_acoustic") is False:
-        acoustic_score = round(0.5 * (1 - song["acousticness"]), 2)
+    acousticness = _clamp_01(float(song.get("acousticness", 0.0)))
+    if user_prefs.get("likes_acoustic") is True:
+        acoustic_score = round(0.5 * acousticness, 2)
+        total_score += acoustic_score
+        reasons.append(f"high acousticness preference (+{acoustic_score})")
+    elif user_prefs.get("likes_acoustic") is False:
+        acoustic_score = round(0.5 * (1 - acousticness), 2)
         total_score += acoustic_score
         reasons.append(f"low acousticness preference (+{acoustic_score})")
 

@@ -1,0 +1,36 @@
+Profile: Chill Lofi
+
+Top recommendations:
+
+Library Rain - Paper Lanterns
+Score: 3.38
+  - genre match (+2.0)
+  - energy proximity (+0.95)
+  - high acousticness preference (+0.43)
+---
+
+Focus Flow - LoRoom
+Score: 3.29
+  - genre match (+2.0)
+  - energy proximity (+0.9)
+  - high acousticness preference (+0.39)
+---
+
+Midnight Coding - LoRoom
+Score: 3.23
+  - genre match (+2.0)
+  - energy proximity (+0.88)
+  - high acousticness preference (+0.35)
+---
+
+Spacewalk Thoughts - Orbit Bloom
+Score: 1.44
+  - energy proximity (+0.98)
+  - high acousticness preference (+0.46)
+---
+
+After the Rainfall - Elara Grey
+Score: 1.40
+  - energy proximity (+0.97)
+  - high acousticness preference (+0.43)
+---

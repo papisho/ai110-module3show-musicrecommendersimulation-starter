@@ -1,0 +1,36 @@
+Profile: Deep Intense Rock
+
+Top recommendations:
+
+Storm Runner - Voltline
+Score: 4.39
+  - genre match (+2.0)
+  - mood match (+1.0)
+  - energy proximity (+0.94)
+  - low acousticness preference (+0.45)
+---
+
+Gym Hero - Max Pulse
+Score: 2.39
+  - mood match (+1.0)
+  - energy proximity (+0.92)
+  - low acousticness preference (+0.47)
+---
+
+Neon Ember - Static Bloom
+Score: 1.39
+  - energy proximity (+0.96)
+  - low acousticness preference (+0.43)
+---
+
+Sunrise City - Neon Echo
+Score: 1.38
+  - energy proximity (+0.97)
+  - low acousticness preference (+0.41)
+---
+
+Iron Lantern - Black Tide
+Score: 1.35
+  - energy proximity (+0.89)
+  - low acousticness preference (+0.46)
+---

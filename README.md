@@ -76,6 +76,22 @@ Use this section to document the experiments you ran. For example:
 - What happened when you added tempo or valence to the score
 - How did your system behave for different types of users
 
+### Terminal Recommendation Screenshots
+
+The recommender was run for each profile with `k=5`, and terminal output screenshots are shown below.
+
+#### High-Energy Pop
+
+![High-Energy Pop recommendations](artifacts/screenshots/high_energy_pop.png)
+
+#### Chill Lofi
+
+![Chill Lofi recommendations](artifacts/screenshots/chill_lofi.png)
+
+#### Deep Intense Rock
+
+![Deep Intense Rock recommendations](artifacts/screenshots/deep_intense_rock.png)
+
 ---
 
 ## Limitations and Risks

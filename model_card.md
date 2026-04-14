@@ -63,6 +63,8 @@ Prompts:
 
 Where the system struggles or behaves unfairly. 
 
+One weakness from my experiments is catalog-driven filter bubble behavior. The dataset is imbalanced (for example, lofi is 3 of 18 songs while most genres appear only once), so users in common genres get more chances for high-ranked matches. Users with a missing favorite genre get no genre points at all and are pushed toward whichever songs happen to share energy or mood, which can feel off-target. This effect was clear in a cold-start test with favorite genre set to k-pop, where the top results were pop, indie pop, synthwave, and rock tracks because energy and mood dominated when genre match was unavailable.
+
 Prompts:  
 
 - Features it does not consider  
@@ -75,6 +77,8 @@ Prompts:
 ## 7. Evaluation  
 
 How you checked whether the recommender behaved as expected. 
+
+I tested the recommender with three profiles: High-Energy Pop, Chill Lofi, and Deep Intense Rock, and compared the top 5 results for each profile. I looked for whether songs changed in ways a listener would expect when I changed genre, mood, energy, and acoustic preference. One surprise was that Gym Hero kept showing up even when genre did not match, because its very high energy score can outweigh missing genre points after the weight experiment. I also ran a logic experiment where I doubled energy weight and halved genre weight, and the ranking became more sensitive to energy than to genre labels. This helped confirm that the model is responsive, but it can over-prioritize “how energetic” a song is over “what type of song” a user asked for.
 
 Prompts:  
 

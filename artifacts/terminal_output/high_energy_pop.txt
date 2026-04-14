@@ -1,0 +1,37 @@
+Profile: High-Energy Pop
+
+Top recommendations:
+
+Sunrise City - Neon Echo
+Score: 4.33
+  - genre match (+2.0)
+  - mood match (+1.0)
+  - energy proximity (+0.92)
+  - low acousticness preference (+0.41)
+---
+
+Gym Hero - Max Pulse
+Score: 3.44
+  - genre match (+2.0)
+  - energy proximity (+0.97)
+  - low acousticness preference (+0.47)
+---
+
+Rooftop Lights - Indigo Parade
+Score: 2.19
+  - mood match (+1.0)
+  - energy proximity (+0.86)
+  - low acousticness preference (+0.33)
+---
+
+Storm Runner - Voltline
+Score: 1.44
+  - energy proximity (+0.99)
+  - low acousticness preference (+0.45)
+---
+
+Neon Ember - Static Bloom
+Score: 1.42
+  - energy proximity (+0.99)
+  - low acousticness preference (+0.43)
+---
