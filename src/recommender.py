@@ -159,6 +159,111 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
 
     return total_score, reasons
 
+
+def score_song_genre_first(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
+    """Strategy score: prioritize genre, then mood, then numeric proximity signals."""
+    total_score = 0.0
+    reasons: List[str] = []
+
+    user_genre = _normalize_label(user_prefs.get("genre"))
+    song_genre = _normalize_label(song.get("genre"))
+    user_mood = _normalize_label(user_prefs.get("mood"))
+    song_mood = _normalize_label(song.get("mood"))
+
+    if song_genre == user_genre and user_genre:
+        total_score += 2.0
+        reasons.append("genre match (+2.0)")
+
+    if song_mood == user_mood and user_mood:
+        total_score += 0.5
+        reasons.append("mood match (+0.5)")
+
+    song_energy = _clamp_01(float(song.get("energy", 0.0)))
+    target_energy = _clamp_01(float(user_prefs.get("energy", 0.0)))
+    energy_score = round(2 * _clamp_01(1 - abs(song_energy - target_energy)), 2)
+    total_score += energy_score
+    reasons.append(f"energy proximity (+{energy_score})")
+
+    acousticness = _clamp_01(float(song.get("acousticness", 0.0)))
+    if user_prefs.get("likes_acoustic") is True:
+        acoustic_score = round(0.5 * acousticness, 2)
+        total_score += acoustic_score
+        reasons.append(f"high acousticness preference (+{acoustic_score})")
+    elif user_prefs.get("likes_acoustic") is False:
+        acoustic_score = round(0.5 * (1 - acousticness), 2)
+        total_score += acoustic_score
+        reasons.append(f"low acousticness preference (+{acoustic_score})")
+
+    return total_score, reasons
+
+
+def score_song_mood_first(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
+    """This function computes a mood-first weighted relevance score and reasons for one song and one user preference profile."""
+    total_score = 0.0
+    reasons: List[str] = []
+
+    user_genre = _normalize_label(user_prefs.get("genre"))
+    song_genre = _normalize_label(song.get("genre"))
+    user_mood = _normalize_label(user_prefs.get("mood"))
+    song_mood = _normalize_label(song.get("mood"))
+
+    if song_mood == user_mood and user_mood:
+        total_score += 2.0
+        reasons.append("mood match (+2.0)")
+
+    if song_genre == user_genre and user_genre:
+        total_score += 0.5
+        reasons.append("genre match (+0.5)")
+
+    song_energy = _clamp_01(float(song.get("energy", 0.0)))
+    target_energy = _clamp_01(float(user_prefs.get("energy", 0.0)))
+    energy_score = round(2 * _clamp_01(1 - abs(song_energy - target_energy)), 2)
+    total_score += energy_score
+    reasons.append(f"energy proximity (+{energy_score})")
+
+    acousticness = _clamp_01(float(song.get("acousticness", 0.0)))
+    if user_prefs.get("likes_acoustic") is True:
+        acoustic_score = round(0.5 * acousticness, 2)
+        total_score += acoustic_score
+        reasons.append(f"high acousticness preference (+{acoustic_score})")
+    elif user_prefs.get("likes_acoustic") is False:
+        acoustic_score = round(0.5 * (1 - acousticness), 2)
+        total_score += acoustic_score
+        reasons.append(f"low acousticness preference (+{acoustic_score})")
+
+    return total_score, reasons
+
+
+def score_song_energy_focused(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
+    """This function computes an energy-focused weighted relevance score and reasons for one song and one user preference profile."""
+    total_score = 0.0
+    reasons: List[str] = []
+
+    song_energy = _clamp_01(float(song.get("energy", 0.0)))
+    target_energy = _clamp_01(float(user_prefs.get("energy", 0.0)))
+    energy_score = round(2 * _clamp_01(1 - abs(song_energy - target_energy)), 2)
+    total_score += energy_score
+    reasons.append(f"energy proximity (+{energy_score})")
+
+    acousticness = _clamp_01(float(song.get("acousticness", 0.0)))
+    if user_prefs.get("likes_acoustic") is True:
+        acoustic_score = round(0.5 * acousticness, 2)
+        total_score += acoustic_score
+        reasons.append(f"high acousticness preference (+{acoustic_score})")
+    elif user_prefs.get("likes_acoustic") is False:
+        acoustic_score = round(0.5 * (1 - acousticness), 2)
+        total_score += acoustic_score
+        reasons.append(f"low acousticness preference (+{acoustic_score})")
+
+    return total_score, reasons
+
+# Maps scoring mode names to their corresponding scoring strategy functions.
+SCORING_MODES = {
+    "genre-first": score_song_genre_first,
+    "mood-first": score_song_mood_first,
+    "energy-focused": score_song_energy_focused,
+}
+
 def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tuple[Dict, float, str]]:
     """This function scores all songs, sorts them by score, and returns the top k recommendation tuples."""
     scored_songs: List[Tuple[Dict, float, str]] = []

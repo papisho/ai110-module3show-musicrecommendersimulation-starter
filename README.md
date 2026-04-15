@@ -31,6 +31,20 @@ Potential Biases
 Genre can dominate the score, so songs outside the favorite genre may be ranked too low even if they match mood and energy well.
 The model ignores some important signals like tempo range, lyrics, and artist familiarity, so recommendations can feel too narrow.
 Some moods and genres have fewer songs in the dataset, which can make the system less fair for users with those preferences.
+
+## Scoring Modes
+
+This project includes three scoring strategies in `src/recommender.py`:
+
+- `genre-first` via `score_song_genre_first`: genre is weighted highest (`+2.0`), mood is lighter (`+0.5`).
+- `mood-first` via `score_song_mood_first`: mood is weighted highest (`+2.0`), genre is lighter (`+0.5`).
+- `energy-focused` via `score_song_energy_focused`: ignores genre and mood; uses energy proximity (up to `+2.0`) and acousticness preference (up to `+0.5`).
+
+The mode-to-function mapping is provided by `SCORING_MODES` in `src/recommender.py`.
+
+To switch modes for quick comparison, update the mode list in `src/main.py` (the `mode_scorers` variable).
+To run only one mode, keep a single `(mode_name, scorer_function)` entry in that list.
+
 ---
 
 ## Getting Started
@@ -43,6 +57,8 @@ Some moods and genres have fewer songs in the dataset, which can make the system
    python -m venv .venv
    source .venv/bin/activate      # Mac or Linux
    .venv\Scripts\activate         # Windows
+
+   ```
 
 2. Install dependencies
 
@@ -119,12 +135,11 @@ Write 1 to 2 paragraphs here about what you learned:
 - about how recommenders turn data into predictions
 - about where bias or unfairness could show up in systems like this
 
-
 ---
 
 ## 7. `model_card_template.md`
 
-Combines reflection and model card framing from the Module 3 guidance. :contentReference[oaicite:2]{index=2}  
+Combines reflection and model card framing from the Module 3 guidance. :contentReference[oaicite:2]{index=2}
 
 ```markdown
 # 🎧 Model Card - Music Recommender Simulation
@@ -176,6 +191,7 @@ Describe your dataset.
 Where does your recommender work well
 
 You can think about:
+
 - Situations where the top results "felt right"
 - Particular user profiles it served well
 - Simplicity or transparency benefits
@@ -187,6 +203,7 @@ You can think about:
 Where does your recommender struggle
 
 Some prompts:
+
 - Does it ignore some genres or moods
 - Does it treat all users as if they have the same taste shape
 - Is it biased toward high energy or one genre by default
@@ -199,6 +216,7 @@ Some prompts:
 How did you check your system
 
 Examples:
+
 - You tried multiple user profiles and wrote down whether the results matched your expectations
 - You compared your simulation to what a real app like Spotify or YouTube tends to recommend
 - You wrote tests for your scoring logic
@@ -226,4 +244,4 @@ A few sentences about what you learned:
 - What surprised you about how your system behaved
 - How did building this change how you think about real music recommenders
 - Where do you think human judgment still matters, even if the model seems "smart"
-
+```
